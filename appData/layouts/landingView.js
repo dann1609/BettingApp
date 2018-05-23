@@ -37,7 +37,7 @@ export default class LandingView extends React.Component {
                         Bienvenido a BettingSoccer. {"\n\n"}La aplicación para apostar por tus equipos favoritos del mundial.
                     </Text>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.dispatch(goTo('registerEmail'))}
+                        onPress={() => this.props.navigation.dispatch(goTo('register'))}
                         style={[appStyle.buttons, {
                             backgroundColor: colors.white
                         }]}
@@ -46,7 +46,7 @@ export default class LandingView extends React.Component {
                             style={[
                                 appStyle.subSection,
                                 {
-                                    color: colors.blue
+                                    color: colors.black
                                 }
                             ]}
                         >
@@ -63,7 +63,7 @@ export default class LandingView extends React.Component {
                             style={[
                                 appStyle.subSection,
                                 {
-                                    color: colors.blue
+                                    color: colors.black
                                 }
                             ]}
                         >

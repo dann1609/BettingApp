@@ -27,7 +27,7 @@ if (require('react-native').Platform.OS === 'ios') {
 
 }
 
-class NavigationView extends React.Component<{}> {
+class NavigationView extends React.Component<> {
 
     constructor(props) {
         super(props)
