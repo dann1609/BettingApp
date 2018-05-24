@@ -1,7 +1,3 @@
-/**
- * React Native App
- * Made by Daniel Padilla
- */
 
 
 export const userType = {

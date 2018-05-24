@@ -1,7 +1,4 @@
-/**
- * React Native App
- * Made by Daniel Padilla
- */
+
 
 
 import {NavigationActions} from "react-navigation";
