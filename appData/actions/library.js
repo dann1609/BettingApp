@@ -3,7 +3,7 @@ import {showDialog} from "./dialog";
 import {saveUser} from "./user";
 import {goTo} from "./navigate";
 import {editMatch, setStadiums, setTeams} from "./matches";
-import {setUserList} from "./betts";
+import {setUserList, updateUserInList} from "./betts";
 
 export function doRegister(name, email, password) {
     return function (dispatch, getState) {
@@ -18,6 +18,10 @@ export function doRegister(name, email, password) {
                             console.log('set response is: ' + JSON.stringify(responseData))
                             dispatch(saveUser(responseData.user))
                             dispatch(goTo('main'))
+                            let path = "/users";
+                            Firebase.track(path, (itemSnap)=>trackUsers(itemSnap,{dispatch, getState}))
+                            dispatch(getBettsInfo())
+                            dispatch(getMatchInfo())
                         });
                 }
             })
@@ -41,6 +45,10 @@ export function doLogin(email, password) {
                 if (responseData.user) {
                     dispatch(saveUser(responseData.user))
                     dispatch(goTo('main'))
+                    let path = "/users";
+                    Firebase.track(path, (itemSnap)=>trackUsers(itemSnap,{dispatch, getState}))
+                    dispatch(getBettsInfo())
+                    dispatch(getMatchInfo())
                 }
             })
             .catch((error) => {
@@ -112,4 +120,9 @@ export function getBettsInfo() {
                 dispatch(setUserList(usersList));
             })
     }
+}
+
+function trackUsers(itemSnap,{dispatch, getState}){
+    console.log('key is: '+JSON.stringify(itemSnap));
+    dispatch(updateUserInList(itemSnap.val()))
 }

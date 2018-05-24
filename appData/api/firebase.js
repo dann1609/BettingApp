@@ -75,6 +75,22 @@ export class Firebase {
     static track(path,action){
         return firebase.database().ref(path).on('child_changed',snap=>{
             console.log('snapchot: '+JSON.stringify(snap))
+            action&&action(snap)
         })
+    }
+
+    static updateBed(userId,points,match,home_score,away_score) {
+        let userMobilePath = "/users/" + userId;
+        return firebase.database().ref(userMobilePath).update({
+            points: points-2,
+            [match.name]:{home_score,away_score}
+        })
+            .catch((error) => {
+                //dev.log('api error');
+                //dev.error(error);
+                return {
+                    error: error.message
+                }
+            });
     }
 }

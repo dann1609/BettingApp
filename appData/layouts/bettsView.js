@@ -6,6 +6,8 @@ import {goTo} from "../actions/navigate";
 import {HeaderBar} from "../components/headerBar";
 import {Firebase} from "../api/firebase";
 import {getBettsInfo, getMatchInfo} from "../actions/library";
+import {editMatch} from "../actions/matches";
+import {updateUserInList} from "../actions/betts";
 
 export default class BettsView extends React.Component {
 
@@ -13,9 +15,6 @@ export default class BettsView extends React.Component {
         super(props)
         this.logo = require('../resources/icons/ic_query.png');//require('../resources/images/heymeetapplogo.png');
         this.background = require('../resources/images/background.png');
-        //let path = "/groups/a/matches";
-        //Firebase.track(path, null)
-        this.props.navigation.dispatch(getBettsInfo())
     }
 
     getUsersList = () => {
@@ -38,8 +37,9 @@ export default class BettsView extends React.Component {
                     rightIcon={this.logo}
                     rightAction={() => this.props.navigation.dispatch(goTo('messages'))}
                 />
+                <UserCard user={{name:'Nombre de usuario',points:'puntos'}} app={this.props.app}/>
                 <FlatList
-                    style={{flex: 1}}
+                    style={{flex: 1, backgroundColor:colors.darkGray}}
                     data={this.getUsersList()}
                     renderItem={({item}) => <UserCard user={item} app={this.props.app}/>}
                 >
@@ -55,7 +55,7 @@ class UserCard extends React.Component {
         return <View
             style={{
                 alignItems: 'center',
-                borderTopWidth: 1,
+                borderBottomWidth: 1,
                 flexDirection:'row',
                 borderColor: colors.black,
                 padding: dimens.normalGap / 4,

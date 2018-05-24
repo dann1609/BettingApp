@@ -59,7 +59,6 @@ export default class IconTextInput extends React.Component {
                     placeholderTextColor={this.props.placeholderTextColor}
                     onChangeText={this.props.onChangeText}
                     value={this.props.value}
-
                 >
 
                 </TextInput>
@@ -85,6 +84,7 @@ export default class IconTextInput extends React.Component {
                         position: 'absolute',
                         bottom: -this.state.height - 5,
                         left: this.state.x,
+                        backgroundColor:colors.white,
                         color: '#ff0000'
                     }, this.props.errorStyle]}>
                     *{this.props.errorMessage}

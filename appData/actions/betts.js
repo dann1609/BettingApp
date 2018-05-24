@@ -7,3 +7,10 @@ export const setUserList = (usersList) => {
         usersList
     }
 }
+
+export const updateUserInList = (user) => {
+    return {
+        type: userListType.UPDATE_USER_IN_LIST,
+        user
+    }
+}
