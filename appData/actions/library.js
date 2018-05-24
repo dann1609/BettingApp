@@ -87,6 +87,7 @@ export function getMatchInfo() {
                     })
             })
     }
+}
 
     function getMatchsPromise({dispatch, getState}) {
         let matchsPromise = []
