@@ -164,7 +164,9 @@ export default class MatchsView extends React.Component {
 
 class MatchCard extends React.Component {
     bet = () => {
-        this.props.bet && this.props.bet()
+        if(!this.props.match.finished) {
+            this.props.bet && this.props.bet()
+        }
     }
 
     getUserBetsNumbers = () => {
@@ -239,9 +241,9 @@ class MatchCard extends React.Component {
                 style={[appStyle.subSection, {
                     flex: 1,
                     marginTop: dimens.normalGap / 4,
-                    color: colors.white
+                    color: this.props.match.finished?colors.orangrend:colors.white
                 }]}
-            >{this.props.match.date}</Text>
+            >{this.props.match.finished?"Finalizado":this.props.match.date}</Text>
             <Text
                 style={[appStyle.subSection, {
                     flex: 1,

@@ -18,8 +18,6 @@ export function doRegister(name, email, password) {
                             console.log('set response is: ' + JSON.stringify(responseData))
                             dispatch(saveUser(responseData.user))
                             dispatch(goTo('main'))
-                            let path = "/users";
-                            Firebase.track(path, (itemSnap)=>trackUsers(itemSnap,{dispatch, getState}))
                             dispatch(getBettsInfo())
                             dispatch(getMatchInfo())
                         });
@@ -45,8 +43,6 @@ export function doLogin(email, password) {
                 if (responseData.user) {
                     dispatch(saveUser(responseData.user))
                     dispatch(goTo('main'))
-                    let path = "/users";
-                    Firebase.track(path, (itemSnap)=>trackUsers(itemSnap,{dispatch, getState}))
                     dispatch(getBettsInfo())
                     dispatch(getMatchInfo())
                 }
@@ -89,9 +85,10 @@ function getMatchsPromise({dispatch, getState}) {
     let matchsPromise = []
     let sources = ["a", "b", "c", "d", "e", "f", "g", "h"];
     sources.map((item) => {
-        let path = "/groups/" + item + "/matches";
+        let matchPath = "/groups/" + item + "/matches";
+        Firebase.track(matchPath, (itemSnap)=>trackMatchs(itemSnap,{dispatch, getState}))
         matchsPromise.push(
-            Firebase.getData(path)
+            Firebase.getData(matchPath)
                 .then((responseData) => {
                     //console.log('response is: ' + JSON.stringify(responseData));
                     responseData.forEach(itemSnap => {
@@ -111,6 +108,7 @@ function getMatchsPromise({dispatch, getState}) {
 export function getBettsInfo() {
     return function (dispatch, getState) {
         let usersPath = "/users";
+        Firebase.track(usersPath, (itemSnap)=>trackUsers(itemSnap,{dispatch, getState}))
         return Firebase.getData(usersPath)
             .then((responseData) => {
                 let usersList = {}
@@ -125,4 +123,9 @@ export function getBettsInfo() {
 function trackUsers(itemSnap,{dispatch, getState}){
     console.log('key is: '+JSON.stringify(itemSnap));
     dispatch(updateUserInList(itemSnap.val()))
+}
+
+function trackMatchs(itemSnap,{dispatch, getState}){
+    console.log('key is: '+JSON.stringify(itemSnap));
+    dispatch(editMatch(itemSnap.val(), itemSnap.val().name))
 }
