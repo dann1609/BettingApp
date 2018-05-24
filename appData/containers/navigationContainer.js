@@ -9,6 +9,7 @@ import {Dialog} from "../components/dialog";
 import tools from "../api/tools";
 import {hideDialog, showTestScreenDialog} from "../actions/dialog";
 import {goTo} from "../actions/navigate";
+import {Firebase} from "../api/firebase";
 
 const {StatusBarManager} = NativeModules;
 
@@ -35,8 +36,8 @@ class NavigationView extends React.Component<> {
             appState: AppState.currentState
         }
         this.screen = tools.getFixedScreenDimensions();
-
         console.log(navbarOffset);
+        Firebase.initialize();
     }
 
     _handleAppStateChange = (nextAppState) => {

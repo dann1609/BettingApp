@@ -9,12 +9,13 @@ import {HeaderBar} from "../components/headerBar";
 import {goBackView, goTo} from "../actions/navigate";
 import tools from "../api/tools";
 import IconTextInput from "../components/iconTextInput";
+import {doLogin} from "../actions/library";
 
 export default class LoginView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {name: "", email: "", password: "", againPassword: "", passwordVisible: false}
+        this.state = {name: "", email: "", password: "", passwordVisible: false}
         this.backIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_back.png');
         this.emailIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_mail.png');
         this.passwordIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_password.png');
@@ -24,12 +25,12 @@ export default class LoginView extends React.Component {
         this.mVisibleIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_visible.png');
     }
 
-    goNext = () => {
-        // this.props.navigation.dispatch(doLogin(this.state.email,this.state.password))
+    login = () => {
+        this.props.navigation.dispatch(doLogin(this.state.email,this.state.password))
     }
 
     enabledToGoNext = () => {
-        return this.validEmail() && this.validPassword("password") && this.validPassword("againPassword")
+        return this.validEmail() && this.validPassword("password")
     }
 
     validEmail = () => {
@@ -138,7 +139,7 @@ export default class LoginView extends React.Component {
                             />
 
                             <TouchableOpacity
-                                onPress={() => this.goNext()}
+                                onPress={() => this.login()}
                                 disabled={!this.enabledToGoNext()}
                                 style={[appStyle.buttons, {
                                     backgroundColor: this.enabledToGoNext() ? colors.white : colors.white80

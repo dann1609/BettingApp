@@ -9,6 +9,7 @@ import {HeaderBar} from "../components/headerBar";
 import {goBackView, goTo} from "../actions/navigate";
 import tools from "../api/tools";
 import IconTextInput from "../components/iconTextInput";
+import {doRegister} from "../actions/library";
 
 export default class RegisterView extends React.Component {
 
@@ -24,8 +25,8 @@ export default class RegisterView extends React.Component {
         this.mVisibleIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_visible.png');
     }
 
-    goNext = () => {
-        // this.props.navigation.dispatch(doLogin(this.state.email,this.state.password))
+    register = () => {
+        this.props.navigation.dispatch(doRegister(this.state.name,this.state.email,this.state.password))
     }
 
     enabledToGoNext = () => {
@@ -184,7 +185,7 @@ export default class RegisterView extends React.Component {
                             />
 
                             <TouchableOpacity
-                                onPress={() => this.goNext()}
+                                onPress={() => this.register()}
                                 disabled={!this.enabledToGoNext()}
                                 style={[appStyle.buttons, {
                                     backgroundColor: this.enabledToGoNext() ? colors.white : colors.white80
