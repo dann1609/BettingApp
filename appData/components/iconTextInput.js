@@ -38,7 +38,8 @@ export default class IconTextInput extends React.Component {
                 <Image
                     style={{
                         height: '100%',
-                        aspectRatio: 1
+                        aspectRatio: 1,
+                        tintColor:colors.white
                     }}
                     resizeMode='contain'
                     source={this.props.icon}

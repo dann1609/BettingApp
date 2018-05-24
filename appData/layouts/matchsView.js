@@ -7,8 +7,9 @@ import {HeaderBar} from "../components/headerBar";
 import {Firebase} from "../api/firebase";
 import {getMatchInfo} from "../actions/library";
 import {Dialog} from "../components/dialog";
-import {hideDialog, showCustomDialog} from "../actions/dialog";
+import {hideDialog, showCustomDialog, showDialog} from "../actions/dialog";
 import tools from "../api/tools";
+import * as appKeys from "../config/appKeys";
 
 export default class MatchsView extends React.Component {
 
@@ -47,10 +48,14 @@ export default class MatchsView extends React.Component {
 
     doBet = (match) => {
         let points = this.props.app.usersList[this.userId].points;
-        if (points > 1) {
+        if (points > appKeys.POINTS_PER_BET-1) {
             Firebase.updateBed(this.userId, points, match, Number(this.state.home_score), Number(this.state.away_score))
+            this.props.navigation.dispatch(hideDialog())
+        }else{
+            this.props.navigation.dispatch(hideDialog())
+            this.props.navigation.dispatch(showDialog("Apuesta fallida","No posees mas puntos para apostar"))
         }
-        this.props.navigation.dispatch(hideDialog())
+
     }
 
     bet = (match, home_score, away_score) => {

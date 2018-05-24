@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import * as appKeys from "../config/appKeys";
 
 export class Firebase {
     static initialize() {
@@ -82,7 +83,7 @@ export class Firebase {
     static updateBed(userId,points,match,home_score,away_score) {
         let userMobilePath = "/users/" + userId;
         return firebase.database().ref(userMobilePath).update({
-            points: points-2,
+            points: points-appKeys.POINTS_PER_BET,
             [match.name]:{home_score,away_score}
         })
             .catch((error) => {

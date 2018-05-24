@@ -16,17 +16,17 @@ export default class LoginView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {name: "", email: "", password: "", passwordVisible: false}
-        this.backIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_back.png');
-        this.emailIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_mail.png');
-        this.passwordIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_password.png');
+        this.backIcon = require('../resources/icons/ic_back.png');
+        this.emailIcon = require('../resources/icons/ic_mail.png');
+        this.passwordIcon = require('../resources/icons/ic_password.png');
         this.backPath = this.props.navigation.state.key;
         this.logo = require('../resources/icons/ic_query.png');//require('../resources/images/user.png');
-        this.mNovisibleIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_novisible.png');
-        this.mVisibleIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_visible.png');
+        this.mNovisibleIcon = require('../resources/icons/ic_novisible.png');
+        this.mVisibleIcon = require('../resources/icons/ic_visible.png');
     }
 
     login = () => {
-        this.props.navigation.dispatch(doLogin(this.state.email,this.state.password))
+        this.props.navigation.dispatch(doLogin(this.state.email, this.state.password))
     }
 
     enabledToGoNext = () => {

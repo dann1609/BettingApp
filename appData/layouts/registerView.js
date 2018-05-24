@@ -16,13 +16,14 @@ export default class RegisterView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {name: "", email: "", password: "", againPassword: "", passwordVisible: false}
-        this.backIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_back.png');
-        this.emailIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_mail.png');
-        this.passwordIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_password.png');
+        this.backIcon = require('../resources/icons/ic_back.png');
+        this.emailIcon = require('../resources/icons/ic_mail.png');
+        this.userIcon = require('../resources/icons/ic_user.png');
+        this.passwordIcon = require('../resources/icons/ic_password.png');
         this.backPath = this.props.navigation.state.key;
         this.logo = require('../resources/icons/ic_query.png');//require('../resources/images/user.png');
-        this.mNovisibleIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_novisible.png');
-        this.mVisibleIcon = require('../resources/icons/ic_query.png');//require('../resources/icons/ic_visible.png');
+        this.mNovisibleIcon = require('../resources/icons/ic_novisible.png');
+        this.mVisibleIcon = require('../resources/icons/ic_visible.png');
     }
 
     register = () => {
@@ -107,7 +108,7 @@ export default class RegisterView extends React.Component {
                                 errorStyle={appStyle.miniSection}
                                 placeholder='fulano de tales'
                                 placeholderTextColor={colors.white80}
-                                icon={this.emailIcon}
+                                icon={this.userIcon}
                                 onChangeText={(text) => this.setState({name: text})}
                                 value={this.state.name}
 

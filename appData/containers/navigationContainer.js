@@ -11,6 +11,8 @@ import {hideDialog, showTestScreenDialog} from "../actions/dialog";
 import {goTo} from "../actions/navigate";
 import {Firebase} from "../api/firebase";
 
+console.disableYellowBox = true;
+
 const {StatusBarManager} = NativeModules;
 
 if (require('react-native').Platform.OS === 'ios') {
@@ -67,85 +69,12 @@ class NavigationView extends React.Component<> {
         AppState.removeEventListener('change', this._handleAppStateChange);
     }
 
-    getAllLayouts = () => {
-        let layouts = [
-            "splash",
-            "landing",
-            "registerEmail",
-            "registerPassword",
-            "registerDone",
-            "notRegistered",
-            "login",
-            "home",
-            "editProfile",
-            "skills",
-            "interests",
-            "nextLunchProfile",
-            "messages",
-            "chat",
-            "reschedule",
-            "selectReschedule"
-        ]
-        return layouts.map((item) => {
-            return {text: item, action: () => this.props.dispatch(goTo(item))}
-        })
-    }
-
     render() {
         this.screen = tools.getFixedScreenDimensions();
         this.dialog = <View/>;
         this.yNDialog = <View/>;
         this.customDialog = <View/>;
 
-        this.testScreen = <TouchableOpacity
-            onPress={() => this.props.dispatch(showTestScreenDialog())}
-            style={{
-                position: 'absolute',
-                width: dimens.normalGap,
-                height: dimens.normalGap,
-                top: 0,
-                backgroundColor: colors.neon
-            }}/>
-
-        if (this.props.app.dialog.testScreenDialogVisible) {
-            this.testScreen = <Dialog hide={this.hideDialog}>
-                <View
-                    style={[
-                        {
-                            borderRadius: 10,
-                            marginTop: dimens.normalGap,
-                            width: this.screen.width - 2 * dimens.normalGap,
-                            backgroundColor: colors.white,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: 1.3 * dimens.normalGap,
-                        }
-                    ]}
-                >
-                    <FlatList
-                        style={{width: '100%'}}
-                        data={this.getAllLayouts()}
-                        renderItem={({item, index}) =>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    item.action()
-                                    this.hideDialog()
-                                }}
-                            >
-
-                                <Text style={[appStyle.subSection, {
-                                    marginTop: 10,
-                                    marginBottom: 10,
-                                    textAlign: 'center',
-                                }]}
-                                >{item.text}
-                                </Text>
-                            </TouchableOpacity>
-                        }
-                    />
-                </View>
-            </Dialog>
-        }
 
         if (this.props.app.dialog.dialogVisible) {
             this.dialog = <Dialog hide={this.hideDialog}>
@@ -291,7 +220,6 @@ class NavigationView extends React.Component<> {
                 })}/>
                 {this.yNDialog}
                 {this.dialog}
-                {this.testScreen}
             </View>
         );
     }
