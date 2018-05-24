@@ -1,78 +1,78 @@
 import React from 'react';
-import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {NavigationActions} from "react-navigation";
 import {appStyle, colors, dimens} from "../components/styles/appStyle";
 import {goTo} from "../actions/navigate";
+import {HeaderBar} from "../components/headerBar";
+import {Firebase} from "../api/firebase";
+import {getBettsInfo, getMatchInfo} from "../actions/library";
 
 export default class BettsView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.logo = null//require('../resources/images/heymeetapplogo.png');
+        this.logo = require('../resources/icons/ic_query.png');//require('../resources/images/heymeetapplogo.png');
         this.background = require('../resources/images/background.png');
+        //let path = "/groups/a/matches";
+        //Firebase.track(path, null)
+        this.props.navigation.dispatch(getBettsInfo())
+    }
+
+    getUsersList = () => {
+        let usersList = [];
+        for (var key in this.props.app.usersList) {
+            usersList.push(this.props.app.usersList[key])
+        }
+        return usersList
     }
 
     render() {
         return (
             <View style={appStyle.viewContainer}>
-                <ImageBackground
-                    style={appStyle.viewCenterContainer}
-                    source={this.background}
-                    >
-                    <Image
-                        //source={this.logo}
-                        style={{
-                            marginBottom: dimens.normalGap
-                        }}
-                    />
-                    <Text
-                        style={[appStyle.section,
-                            {
-                                margin: dimens.normalGap,
-                                paddingBottom: dimens.normalGap / 2,
-                                textAlign: 'center'
-                            }
-                        ]}
-                    >
-                        Bienvenido a BettingSoccer. {"\n\n"}La aplicación para apostar por tus equipos favoritos del mundial.
-                    </Text>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.dispatch(goTo('register'))}
-                        style={[appStyle.buttons, {
-                            backgroundColor: colors.white
-                        }]}
-                    >
-                        <Text
-                            style={[
-                                appStyle.subSection,
-                                {
-                                    color: colors.black
-                                }
-                            ]}
-                        >
-                            Registrar
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.dispatch(goTo('login'))}
-                        style={[appStyle.buttons, {
-                            backgroundColor: colors.white
-                        }]}
-                    >
-                        <Text
-                            style={[
-                                appStyle.subSection,
-                                {
-                                    color: colors.black
-                                }
-                            ]}
-                        >
-                            Iniciar Sesion
-                        </Text>
-                    </TouchableOpacity>
-                </ImageBackground>
+                <HeaderBar
+                    bigIcon
+                    backgroundColor={colors.ultraLightGray}
+                    alignItems='flex-end'
+                    leftIcon={this.logo}
+                    leftAction={() => this.props.navigation.dispatch(goTo('editProfile'))}
+                    rightIcon={this.logo}
+                    rightAction={() => this.props.navigation.dispatch(goTo('messages'))}
+                />
+                <FlatList
+                    style={{flex: 1}}
+                    data={this.getUsersList()}
+                    renderItem={({item}) => <UserCard user={item} app={this.props.app}/>}
+                >
+
+                </FlatList>
             </View>
         )
     }
 }
 
+class UserCard extends React.Component {
+    render() {
+        return <View
+            style={{
+                alignItems: 'center',
+                borderTopWidth: 1,
+                flexDirection:'row',
+                borderColor: colors.black,
+                padding: dimens.normalGap / 4,
+                backgroundColor: colors.darkGray
+            }}>
+            <Text
+                style={[appStyle.subSection, {
+                    flex: 1,
+                    color: colors.white
+                }]}
+            >{this.props.user.name}</Text>
+            <Text
+                style={[appStyle.subSection, {
+                    flex: 1,
+                    color: colors.white
+                }]}
+            >{this.props.user.points}</Text>
+        </View>
+    }
+}

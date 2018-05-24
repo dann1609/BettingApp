@@ -41,7 +41,7 @@ export default class MatchsView extends React.Component {
                 <FlatList
                     style={{flex: 1}}
                     data={this.getMatchesList()}
-                    renderItem={({item}) => <MatchCard match={item}/>}
+                    renderItem={({item}) => <MatchCard match={item} app={this.props.app}/>}
                 >
 
                 </FlatList>
@@ -50,11 +50,62 @@ export default class MatchsView extends React.Component {
     }
 }
 
-class MatchCard extends React.Component{
-    render(){
+class MatchCard extends React.Component {
+    render() {
+        let stadium = this.props.app.stadiums[this.props.match.stadium];
         return <View
-        style={{borderWidth:1}}>
-            <Text>{this.props.match.name}</Text>
+            style={{
+                alignItems:'center',
+                borderTopWidth: 1,
+                borderColor:colors.black,
+                paddingTop:dimens.normalGap/4,
+                backgroundColor:colors.darkGray}}>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems:'center'
+                }}
+            >
+                <Image
+                    style={{flex: 1, aspectRatio: 1.5}}
+                    source={{uri: this.props.app.teams[this.props.match.home_team].flag}}
+                />
+                <Text
+                    style={[appStyle.subSection,{
+                        flex: 1,
+                        marginLeft:dimens.normalGap/4,
+                        color:colors.white,
+                        textAlign:'left'
+                    }]}
+                >{this.props.app.teams[this.props.match.home_team].name}</Text>
+                <Text
+                    style={[appStyle.subSection,{
+                        flex: 1,
+                        marginRight:dimens.normalGap/4,
+                        color:colors.white,
+                        textAlign:'right'
+                    }]}
+                >{this.props.app.teams[this.props.match.away_team].name}</Text>
+                <Image
+                    style={{flex: 1, aspectRatio: 1.5}}
+                    source={{uri:this.props.app.teams[this.props.match.away_team].flag}}
+                />
+            </View>
+            <Text
+                style={[appStyle.subSection,{
+                    flex: 1,
+                    marginTop:dimens.normalGap/4,
+                    color:colors.white
+                }]}
+            >{this.props.match.date}</Text>
+            <Text
+                style={[appStyle.subSection,{
+                    flex: 1,
+                    marginTop:dimens.normalGap/8,
+                    marginBottom:dimens.normalGap/4,
+                    color:colors.white
+                }]}
+            >{stadium.name+", "+stadium.city}</Text>
         </View>
     }
 }

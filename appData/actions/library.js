@@ -3,6 +3,7 @@ import {showDialog} from "./dialog";
 import {saveUser} from "./user";
 import {goTo} from "./navigate";
 import {editMatch, setStadiums, setTeams} from "./matches";
+import {setUserList} from "./betts";
 
 export function doRegister(name, email, password) {
     return function (dispatch, getState) {
@@ -11,27 +12,14 @@ export function doRegister(name, email, password) {
                 if (responseData.error != undefined) {
                     throw responseData.error;
                 } else {
+                    console.log('response is: ' + JSON.stringify(responseData));
                     return Firebase.setUserPropierties(name, responseData.user.uid)
-                        .then((responseData) => {
+                        .then(() => {
                             console.log('set response is: ' + JSON.stringify(responseData))
-                            if (responseData.error != undefined) {
-                                throw responseData.error;
-                            }
+                            dispatch(saveUser(responseData.user))
+                            dispatch(goTo('main'))
                         });
                 }
-                console.log('response is: ' + JSON.stringify(responseData));
-
-                if (responseData.user) {
-                    dispatch(saveUser(responseData.user))
-                    dispatch(goTo('main'))
-                }
-                /*
-
-                                                if(library.checkErrorMessage(responseData)){
-                                                    dispatch(showDialog('Error',library.checkErrorMessage(responseData)))
-                                                }
-                                                */
-
             })
             .catch((error) => {
                 dispatch(showDialog('Error', error.message || error))
@@ -89,25 +77,39 @@ export function getMatchInfo() {
     }
 }
 
-    function getMatchsPromise({dispatch, getState}) {
-        let matchsPromise = []
-        let sources = ["a", "b", "c", "d", "e", "f", "g", "h"];
-        sources.map((item) => {
-            let path = "/groups/" + item + "/matches";
-            matchsPromise.push(
-                Firebase.getData(path)
-                    .then((responseData) => {
-                        //console.log('response is: ' + JSON.stringify(responseData));
-                        responseData.forEach(itemSnap => {
-                            //console.log('key is: '+JSON.stringify(itemSnap));
-                            dispatch(editMatch(itemSnap.val(), itemSnap.val().name))
-                        })
+function getMatchsPromise({dispatch, getState}) {
+    let matchsPromise = []
+    let sources = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    sources.map((item) => {
+        let path = "/groups/" + item + "/matches";
+        matchsPromise.push(
+            Firebase.getData(path)
+                .then((responseData) => {
+                    //console.log('response is: ' + JSON.stringify(responseData));
+                    responseData.forEach(itemSnap => {
+                        //console.log('key is: '+JSON.stringify(itemSnap));
+                        dispatch(editMatch(itemSnap.val(), itemSnap.val().name))
                     })
-                    .catch((error) => {
-                        dispatch(showDialog('Error', error))
-                        return {error}
-                    })
-            )
-        })
-        return matchsPromise
+                })
+                .catch((error) => {
+                    dispatch(showDialog('Error', error))
+                    return {error}
+                })
+        )
+    })
+    return matchsPromise
+}
+
+export function getBettsInfo() {
+    return function (dispatch, getState) {
+        let usersPath = "/users";
+        return Firebase.getData(usersPath)
+            .then((responseData) => {
+                let usersList = {}
+                responseData.forEach(itemSnap => {
+                    usersList[itemSnap.val().id] = itemSnap.val()
+                })
+                dispatch(setUserList(usersList));
+            })
     }
+}

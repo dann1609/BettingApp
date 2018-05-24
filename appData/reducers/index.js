@@ -5,6 +5,7 @@ import {user} from "./userReducer";
 import {matches} from "./matchesReducer";
 import {teams} from "./teamsReducer";
 import {stadiums} from "./stadiumsReducer";
+import {usersList} from "./usersListReducer";
 
 const reducers = combineReducers({
     nav: navReducer,
@@ -12,7 +13,8 @@ const reducers = combineReducers({
     user,
     matches,
     teams,
-    stadiums
+    stadiums,
+    usersList
 });
 
 export default reducers

@@ -37,7 +37,8 @@ export class Firebase {
         let userMobilePath = "/users/" + userId;
         return firebase.database().ref(userMobilePath).set({
             points: 100,
-            name: name
+            name: name,
+            id:userId
         })
             .catch((error) => {
                 //dev.log('api error');
