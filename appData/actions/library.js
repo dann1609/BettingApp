@@ -12,10 +12,10 @@ export function doRegister(name, email, password) {
                 if (responseData.error != undefined) {
                     throw responseData.error;
                 } else {
-                    console.log('response is: ' + JSON.stringify(responseData));
+                    //console.log('response is: ' + JSON.stringify(responseData));
                     return Firebase.setUserPropierties(name, responseData.user.uid)
                         .then(() => {
-                            console.log('set response is: ' + JSON.stringify(responseData))
+                            //console.log('set response is: ' + JSON.stringify(responseData))
                             dispatch(saveUser(responseData.user))
                             dispatch(goTo('main'))
                             dispatch(getBettsInfo())
@@ -37,7 +37,7 @@ export function doLogin(email, password) {
                 if (responseData.error != undefined) {
                     throw responseData.error;
                 }
-                console.log('response is: ' + JSON.stringify(responseData));
+                //console.log('response is: ' + JSON.stringify(responseData));
 
 
                 if (responseData.user) {
@@ -59,7 +59,7 @@ export function getMatchInfo() {
         let teamsPath = "/teams";
         return Firebase.getData(teamsPath)
             .then((responseData) => {
-                console.log('response is: ' + JSON.stringify(responseData));
+                //console.log('response is: ' + JSON.stringify(responseData));
                 let teams = {}
                 responseData.forEach(itemSnap => {
                     teams[itemSnap.val().id] = itemSnap.val()
@@ -68,7 +68,7 @@ export function getMatchInfo() {
                 let stadiumsPath = "/stadiums";
                 return Firebase.getData(stadiumsPath)
                     .then((responseData) => {
-                        console.log('response is: ' + JSON.stringify(responseData));
+                        //console.log('response is: ' + JSON.stringify(responseData));
                         let stadiums = {}
                         responseData.forEach(itemSnap => {
                             stadiums[itemSnap.val().id] = itemSnap.val()
@@ -121,11 +121,11 @@ export function getBettsInfo() {
 }
 
 function trackUsers(itemSnap,{dispatch, getState}){
-    console.log('key is: '+JSON.stringify(itemSnap));
+    //console.log('key is: '+JSON.stringify(itemSnap));
     dispatch(updateUserInList(itemSnap.val()))
 }
 
 function trackMatchs(itemSnap,{dispatch, getState}){
-    console.log('key is: '+JSON.stringify(itemSnap));
+    //console.log('key is: '+JSON.stringify(itemSnap));
     dispatch(editMatch(itemSnap.val(), itemSnap.val().name))
 }

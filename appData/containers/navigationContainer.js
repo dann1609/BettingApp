@@ -19,12 +19,12 @@ if (require('react-native').Platform.OS === 'ios') {
     navbarPadding = 0;
 } else {
     navbarPadding = StatusBarManager.HEIGHT;
-    console.log('status bar android: ' + StatusBarManager.HEIGHT)
+    //console.log('status bar android: ' + StatusBarManager.HEIGHT)
 }
 
 if (require('react-native').Platform.OS === 'ios') {
     navbarOffset = 24;
-    console.log('status bar ios: ' + navbarOffset);
+    //console.log('status bar ios: ' + navbarOffset);
 } else {
     navbarOffset = 0;
 
@@ -38,7 +38,7 @@ class NavigationView extends React.Component<> {
             appState: AppState.currentState
         }
         this.screen = tools.getFixedScreenDimensions();
-        console.log(navbarOffset);
+        //console.log(navbarOffset);
         Firebase.initialize();
     }
 

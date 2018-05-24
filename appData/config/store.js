@@ -10,7 +10,7 @@ const loggerMiddleware = createLogger();
 let store = createStore(
     reducers,
     applyMiddleware(
-        loggerMiddleware, // neat middleware that logs actions
+        //loggerMiddleware, // neat middleware that logs actions
         thunkMiddleware // lets us dispatch() functions
     )
 );

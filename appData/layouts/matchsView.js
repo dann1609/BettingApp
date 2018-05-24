@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {NavigationActions} from "react-navigation";
 import {appStyle, colors, dimens} from "../components/styles/appStyle";
-import {goTo} from "../actions/navigate";
+import {goTo, resetNavigation} from "../actions/navigate";
 import {HeaderBar} from "../components/headerBar";
 import {Firebase} from "../api/firebase";
 import {getMatchInfo} from "../actions/library";
@@ -16,7 +16,7 @@ export default class MatchsView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {home_score: '0', away_score: '0'}
-        this.logo = require('../resources/icons/ic_query.png');//require('../resources/images/heymeetapplogo.png');
+        this.logo = require('../resources/icons/ic_travel.png');
         this.background = require('../resources/images/background.png');
         let path = "/groups/a/matches";
         Firebase.track(path, null)
@@ -150,10 +150,8 @@ export default class MatchsView extends React.Component {
                     backgroundColor={colors.ultraLightGray}
                     alignItems='flex-end'
                     leftIcon={this.logo}
-                    leftAction={() => this.props.navigation.dispatch(goTo('editProfile'))}
-                    rightIcon={this.logo}
-                    rightAction={() => this.props.navigation.dispatch(goTo('messages'))}
-                />
+                    leftAction={() => this.props.navigation.dispatch(resetNavigation(0,[{route: 'landing'}]))}
+                    />
                 <FlatList
                     style={{flex: 1}}
                     data={this.getMatchesList()}

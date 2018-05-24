@@ -18,6 +18,7 @@ export default class LoginView extends React.Component {
         this.state = {name: "", email: "", password: "", passwordVisible: false}
         this.backIcon = require('../resources/icons/ic_back.png');
         this.emailIcon = require('../resources/icons/ic_mail.png');
+        this.userIcon = require('../resources/icons/ic_user.png');
         this.passwordIcon = require('../resources/icons/ic_password.png');
         this.backPath = this.props.navigation.state.key;
         this.logo = require('../resources/icons/ic_query.png');//require('../resources/images/user.png');
@@ -76,8 +77,12 @@ export default class LoginView extends React.Component {
                                 paddingBottom: dimens.normalGap
                             }}>
                             <Image
-                                source={this.logo}
-                                style={{}}
+                                source={this.userIcon}
+                                style={{
+                                    width:100,
+                                    height:100,
+                                    tintColor:colors.white
+                                }}
                             />
                             <Text
                                 style={[appStyle.bigSection,

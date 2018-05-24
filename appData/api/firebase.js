@@ -75,7 +75,7 @@ export class Firebase {
     }
     static track(path,action){
         return firebase.database().ref(path).on('child_changed',snap=>{
-            console.log('snapchot: '+JSON.stringify(snap))
+            //console.log('snapchot: '+JSON.stringify(snap))
             action&&action(snap)
         })
     }

@@ -77,8 +77,12 @@ export default class RegisterView extends React.Component {
                                 paddingBottom: dimens.normalGap
                             }}>
                             <Image
-                                source={this.logo}
-                                style={{}}
+                                source={this.userIcon}
+                                style={{
+                                    width:100,
+                                    height:100,
+                                    tintColor:colors.white
+                                }}
                             />
                             <Text
                                 style={[appStyle.bigSection,

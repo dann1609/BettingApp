@@ -10,7 +10,7 @@ export const MainNavigator = TabNavigator({
     match: {
         screen: matchsContainer,
         navigationOptions: ({navigation}) => {
-            return tabBarOptions('Partidos', require('../../resources/icons/ic_query.png'),()=>{
+            return tabBarOptions('Partidos', require('../../resources/icons/ic_sports.png'),()=>{
                 navigation.dispatch(goTo('match'))
                 //navigation.dispatch(resetTab(0,[{route:'homeDefault'}],'HomeNavigator'))
             })
@@ -19,7 +19,7 @@ export const MainNavigator = TabNavigator({
     bets: {
         screen: bettsContainer,
         navigationOptions: ({navigation}) => {
-            return tabBarOptions('Apuestas', require('../../resources/icons/ic_query.png'),()=>{
+            return tabBarOptions('Lista de usuarios', require('../../resources/icons/ic_books.png'),()=>{
                 navigation.dispatch(goTo('bets'))
                 //navigation.dispatch(resetTab(0,[{route:'practiceDefault'}],'PracticeNavigator'))
             })
